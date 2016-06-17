@@ -1,9 +1,9 @@
 (function () {
     var model = {
-    	getAllPerson: function () {
+    	getAllSwimmers: function () {
     		var deferred = $.Deferred();
 
-    		$.get(BASE_URL + CURRENT_CONTROLLER + "/get_all_persons", { }, function (data) {
+    		$.get(BASE_URL + CURRENT_CONTROLLER + "/get_all_swimmers", { }, function (data) {
 				deferred.resolve(data);
 			});
 
@@ -35,76 +35,76 @@
     	},
     	render: function () {
     		var self = this;
-            var personsAgeNineToTwelve = [];
-            var personsAgeThirteenToSeventeen = [];
-            var personsAgeEighteenUp = [];
+            var swimmersAgeNineToTwelve = [];
+            var swimmersAgeThirteenToSeventeen = [];
+            var swimmersAgeEighteenUp = [];
             
-            model.getAllPerson().done(function (persons) {
-                for(var i=0; i<persons.length; i++){
-                    if(persons[i].age >=9 && persons[i].age <=12){
-                        personsAgeNineToTwelve.push({
-                            first_name: persons[i]['first_name'],
-                            middle_name: persons[i]['middle_name'],
-                            last_name: persons[i]['last_name'],
-                            time: persons[i]['time']
+            model.getAllSwimmers().done(function (swimmers) {
+
+                swimmers = JSON.parse(swimmers);
+                
+                for(var i=0; i<swimmers.length; i++){
+                    if(swimmers[i].age >=9 && swimmers[i].age <=12){
+                        swimmersAgeNineToTwelve.push({
+                            first_name: swimmers[i]['first_name'],
+                            last_initial: swimmers[i]['last_initial'],
+                            challenge_time: swimmers[i]['challenge_time']
                         });
                     }
-                    else if(persons[i].age >=13 && persons[i].age <=17){
-                        personsAgeThirteenToSeventeen.push({
-                            first_name: persons[i]['first_name'],
-                            middle_name: persons[i]['middle_name'],
-                            last_name: persons[i]['last_name'],
-                            time: persons[i]['time']
+                    else if(swimmers[i].age >=13 && swimmers[i].age <=17){
+                        swimmersAgeThirteenToSeventeen.push({
+                            first_name: swimmers[i]['first_name'],
+                            last_initial: swimmers[i]['last_initial'],
+                            challenge_time: swimmers[i]['challenge_time']
                         });
                     }
-                    else if(persons[i].age >= 18){
-                        personsAgeEighteenUp.push({
-                            first_name: persons[i]['first_name'],
-                            middle_name: persons[i]['middle_name'],
-                            last_name: persons[i]['last_name'],
-                            time: persons[i]['time']
+                    else if(swimmers[i].age >= 18){
+                        swimmersAgeEighteenUp.push({
+                            first_name: swimmers[i]['first_name'],
+                            last_initial: swimmers[i]['last_initial'],
+                            challenge_time: swimmers[i]['challenge_time']
                         });
                     }
                 }
                 
-                personsAgeNineToTwelve = personsAgeNineToTwelve.slice(0,10);
-                personsAgeThirteenToSeventeen = personsAgeThirteenToSeventeen.slice(0,10);
-                personsAgeEighteenUp = personsAgeEighteenUp.slice(0,10);
+                swimmersAgeNineToTwelve = swimmersAgeNineToTwelve.slice(0,10);
+                swimmersAgeThirteenToSeventeen = swimmersAgeThirteenToSeventeen.slice(0,10);
+                swimmersAgeEighteenUp = swimmersAgeEighteenUp.slice(0,10);
 
                 self.ageNineToTwelveTable.empty();
                 self.ageThirteenToSeventeenTable.empty();
                 self.ageEighteenUpTable.empty();
 
-                for(var j=0; j<personsAgeNineToTwelve.length; j++){
+                for(var j=0; j<swimmersAgeNineToTwelve.length; j++){
                     var ranking = j + 1;
                     self.ageNineToTwelveTable.append(
                         '<tr>'+
                             '<td scope="row">'+ ranking +'</td>'+
-                            '<td>'+ personsAgeNineToTwelve[j].first_name +" "+ personsAgeNineToTwelve[j].middle_name +" "+ personsAgeNineToTwelve[j].last_name  +'</td>'+
-                            '<td>'+ personsAgeNineToTwelve[j].time.substring(3) +'</td>'+
+                            '<td>'+ swimmersAgeNineToTwelve[j].first_name +" "+ swimmersAgeNineToTwelve[j].last_initial +"."+'</td>'+
+                            '<td>'+ swimmersAgeNineToTwelve[j].challenge_time.substring(3) +'</td>'+
 
                         '</tr>'
                     );
                 }
 
-                for(var k=0; k<personsAgeThirteenToSeventeen.length; k++){
+                for(var k=0; k<swimmersAgeThirteenToSeventeen.length; k++){
                     var ranking = k + 1;
                     self.ageThirteenToSeventeenTable.append(
                         '<tr>'+
                             '<td scope="row">'+ ranking +'</td>'+
-                            '<td>'+ personsAgeThirteenToSeventeen[k].first_name +" "+ personsAgeThirteenToSeventeen[k].middle_name +" "+ personsAgeThirteenToSeventeen[k].last_name  +'</td>'+
-                            '<td>'+ personsAgeThirteenToSeventeen[k].time.substring(3) +'</td>'+
+                            '<td>'+ swimmersAgeThirteenToSeventeen[k].first_name +" "+ swimmersAgeThirteenToSeventeen[k].last_initial  +"."+'</td>'+
+                            '<td>'+ swimmersAgeThirteenToSeventeen[k].challenge_time.substring(3) +'</td>'+
                         '</tr>'
                     );
                 }
 
-                for(var l=0; l<personsAgeEighteenUp.length; l++){
+                for(var l=0; l<swimmersAgeEighteenUp.length; l++){
                     var ranking = l + 1;
                     self.ageEighteenUpTable.append(
                         '<tr>'+
                             '<td scope="row">'+ ranking +'</td>'+
-                            '<td>'+ personsAgeEighteenUp[l].first_name +" "+ personsAgeEighteenUp[l].middle_name +" "+ personsAgeEighteenUp[l].last_name  +'</td>'+
-                            '<td>'+ personsAgeEighteenUp[l].time.substring(3) +'</td>'+
+                            '<td>'+ swimmersAgeEighteenUp[l].first_name +" "+ swimmersAgeEighteenUp[l].last_initial  +"."+'</td>'+
+                            '<td>'+ swimmersAgeEighteenUp[l].challenge_time.substring(3) +'</td>'+
                         '</tr>'
                     );
                 }

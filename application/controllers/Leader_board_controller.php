@@ -1,9 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-require APPPATH . '/libraries/REST_Controller.php';
-
-class Leader_Board_Controller extends REST_Controller {
+class Leader_Board_Controller extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -11,30 +9,33 @@ class Leader_Board_Controller extends REST_Controller {
 	}
 
 
-	public function index_get() {
+	public function index() {
 		$data['current_page'] = 'leader_board';
 		$this->load->view($data['current_page'] . '/index', $data);
 	}
 
-	public function get_all_persons_get(){
+	public function get_all_swimmers(){
 
-		$persons_repo = new Persons_Repository($this->base_model->get_db_instance());
-		$persons = $persons_repo->get_all_persons();
+		$swimmers_repo = new Swimmers_Repository($this->base_model->get_db_instance());
+		$swimmers = $swimmers_repo->get_all_swimmers();
 		$data = array();
 
-		foreach($persons as $person) {
+		foreach($swimmers as $swimmer) {
 			array_push($data, array(
-				'id' => $person->id,
-				'first_name' => $person->first_name,
-				'middle_name' => $person->middle_name,
-				'last_name' => $person->last_name,
-				'age' => $person->age,
-				'time' => $person->time,
-				'created_at' => $person->created_at,
-				'updated_at' => $person->updated_at
+				'id' => $swimmer->id,
+				'transaction_id' => $swimmer->transaction_id,
+				'fish_id' => $swimmer->fish_id,
+				'first_name' => $swimmer->first_name,
+				'last_initial' => $swimmer->last_initial,
+				'age' => $swimmer->age,
+				'challenge_time' => $swimmer->challenge_time,
+				'city' => $swimmer->city,
+				'state' => $swimmer->state,
+				'created_at' => $swimmer->created_at,
+				'updated_at' => $swimmer->updated_at
 			));
 		}
 
-		$this->response($data);
+		echo json_encode($data);
 	}
 }
