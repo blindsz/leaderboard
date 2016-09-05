@@ -38,6 +38,7 @@
             var swimmersAgeNineToTwelve = [];
             var swimmersAgeThirteenToSeventeen = [];
             var swimmersAgeEighteenUp = [];
+            var suffixes = ['st','nd','rd','th','th','th','th','th','th','th','th','th'];
             
             model.getAllSwimmers().done(function (swimmers) {
 
@@ -76,7 +77,7 @@
                 self.ageEighteenUpTable.empty();
 
                 for(var j=0; j<swimmersAgeNineToTwelve.length; j++){
-                    var ranking = j + 1;
+                    var ranking = j + 1 + suffixes[j];
                     self.ageNineToTwelveTable.append(
                         '<tr>'+
                             '<td scope="row">'+ ranking +'</td>'+
@@ -88,7 +89,7 @@
                 }
 
                 for(var k=0; k<swimmersAgeThirteenToSeventeen.length; k++){
-                    var ranking = k + 1;
+                    var ranking = k + 1 + suffixes[k];
                     self.ageThirteenToSeventeenTable.append(
                         '<tr>'+
                             '<td scope="row">'+ ranking +'</td>'+
@@ -99,7 +100,7 @@
                 }
 
                 for(var l=0; l<swimmersAgeEighteenUp.length; l++){
-                    var ranking = l + 1;
+                    var ranking = l + 1 + suffixes[l]; 
                     self.ageEighteenUpTable.append(
                         '<tr>'+
                             '<td scope="row">'+ ranking +'</td>'+
